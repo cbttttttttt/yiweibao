@@ -29,4 +29,4 @@ app:
   upload:
     path: ./uploads
   simulation:
-    acceleration: 180.0  # ~2h full degradation cycle at normal load
+    acceleration: 2.0  # ~2h full degradation cycle at normal daytime load
