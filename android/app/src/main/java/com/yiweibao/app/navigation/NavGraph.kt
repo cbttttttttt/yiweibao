@@ -23,6 +23,7 @@ import com.yiweibao.app.ui.workorder.RepairScreen
 import com.yiweibao.app.ui.statistics.StatisticsScreen
 import com.yiweibao.app.ui.monitor.MonitorScreen
 import com.yiweibao.app.ui.monitor.EquipmentDataScreen
+import com.yiweibao.app.ui.monitor.HealthDetailScreen
 import com.yiweibao.app.ui.knowledge.KnowledgeBaseScreen
 import com.yiweibao.app.util.TokenManager
 import kotlinx.coroutines.launch
@@ -62,6 +63,9 @@ sealed class Screen(val route: String) {
     object Monitor : Screen("monitor")
     object EquipmentData : Screen("equipment_data/{id}/{name}") {
         fun create(id: Long, name: String) = "equipment_data/$id/${java.net.URLEncoder.encode(name, "UTF-8")}"
+    }
+    object HealthDetail : Screen("health_detail/{id}/{name}") {
+        fun create(id: Long, name: String) = "health_detail/$id/${java.net.URLEncoder.encode(name, "UTF-8")}"
     }
 }
 
@@ -217,7 +221,9 @@ fun YiweibaoNavGraph(intent: Intent? = null) {
                 onEquipmentClick = { id, name ->
                     navController.navigate(Screen.EquipmentData.create(id, name))
                 },
-                onHealthDetailClick = { _, _ -> }  // placeholder until Task 10
+                onHealthDetailClick = { id, name ->
+                    navController.navigate(Screen.HealthDetail.create(id, name))
+                }
             )
         }
 
@@ -238,6 +244,23 @@ fun YiweibaoNavGraph(intent: Intent? = null) {
                 onCreateWorkOrder = { eqId, desc, cat ->
                     navController.navigate(Screen.CreateWorkOrder.create(eqId, desc, cat))
                 }
+            )
+        }
+
+        composable(
+            route = Screen.HealthDetail.route,
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+                navArgument("name") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getLong("id") ?: 0L
+            val name = java.net.URLDecoder.decode(
+                backStackEntry.arguments?.getString("name") ?: "设备", "UTF-8")
+            HealthDetailScreen(
+                equipmentId = id,
+                equipmentName = name,
+                onBack = { navController.popBackStack() }
             )
         }
 
