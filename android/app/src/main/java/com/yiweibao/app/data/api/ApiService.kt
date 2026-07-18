@@ -90,4 +90,10 @@ interface ApiService {
 
     @GET("api/diagnosis/rules")
     suspend fun getDiagnosisRules(): ApiResponse<List<DiagnosisResult>>
+
+    @GET("api/health/scores")
+    suspend fun getHealthScores(): ApiResponse<List<HealthScore>>
+
+    @GET("api/health/{equipmentId}")
+    suspend fun getHealthDetail(@Path("equipmentId") id: Long): ApiResponse<HealthDetail>
 }

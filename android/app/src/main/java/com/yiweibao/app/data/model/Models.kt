@@ -143,3 +143,35 @@ data class MachineData(
     val status: Int,
     val timestamp: String
 )
+
+data class HealthScore(
+    val equipmentId: Long,
+    val equipmentName: String,
+    val workshop: String?,
+    val score: Double,
+    val status: String,
+    val vibScore: Double,
+    val tempScore: Double,
+    val elecScore: Double
+)
+
+data class HealthDetail(
+    val equipmentId: Long,
+    val equipmentName: String,
+    val workshop: String?,
+    val totalScore: Double,
+    val status: String,
+    val factors: List<FactorDetail>,
+    val rul: String,
+    val vibScore: Double,
+    val tempScore: Double,
+    val elecScore: Double
+)
+
+data class FactorDetail(
+    val name: String,
+    val value: Double,
+    val unit: String,
+    val reference: String,
+    val level: String
+)
