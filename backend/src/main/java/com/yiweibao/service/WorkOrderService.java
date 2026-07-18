@@ -23,13 +23,16 @@ public class WorkOrderService {
     private final WorkOrderRepository workOrderRepository;
     private final EquipmentRepository equipmentRepository;
     private final DiagnosisService diagnosisService;
+    private final MachineDataGenerator machineDataGenerator;
 
     public WorkOrderService(WorkOrderRepository workOrderRepository,
                             EquipmentRepository equipmentRepository,
-                            DiagnosisService diagnosisService) {
+                            DiagnosisService diagnosisService,
+                            MachineDataGenerator machineDataGenerator) {
         this.workOrderRepository = workOrderRepository;
         this.equipmentRepository = equipmentRepository;
         this.diagnosisService = diagnosisService;
+        this.machineDataGenerator = machineDataGenerator;
     }
 
     public Page<WorkOrder> list(List<Integer> statuses, Long equipmentId, int page, int size) {
@@ -149,6 +152,11 @@ public class WorkOrderService {
             diagnosisService.createCaseFromWorkOrder(saved);
         } catch (Exception e) {
             // Don't fail the completion if case creation fails
+        }
+
+        // Reset degradation state for predictive maintenance simulation
+        if (saved.getFaultCategory() != null) {
+            machineDataGenerator.resetWear(equipment.getId(), saved.getFaultCategory());
         }
 
         return saved;
