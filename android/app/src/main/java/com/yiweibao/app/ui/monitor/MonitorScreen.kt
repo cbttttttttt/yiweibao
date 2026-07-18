@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.yiweibao.app.data.model.HealthScore
 import com.yiweibao.app.data.model.MachineData
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,6 +24,7 @@ import com.yiweibao.app.data.model.MachineData
 fun MonitorScreen(
     onBack: () -> Unit,
     onEquipmentClick: (Long, String) -> Unit,
+    onHealthDetailClick: (Long, String) -> Unit,
     viewModel: MonitorViewModel = viewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -82,22 +84,41 @@ fun MonitorScreen(
                 item {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text("在线设备: ${state.realtimeData.size} 台",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold)
-                        Surface(shape = RoundedCornerShape(8.dp), color = MaterialTheme.colorScheme.surfaceVariant) {
-                            Text("自动刷新 5s", modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                                style = MaterialTheme.typography.labelSmall)
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Surface(shape = RoundedCornerShape(8.dp), color = MaterialTheme.colorScheme.surfaceVariant) {
+                                Text("自动刷新 5s", modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                                    style = MaterialTheme.typography.labelSmall)
+                            }
+                            Spacer(Modifier.width(8.dp))
+                            TextButton(onClick = { viewModel.toggleSort() }) {
+                                Text(
+                                    if (state.sortByHealth) "健康度↓" else "默认",
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                            }
                         }
                     }
                 }
 
-                items(state.realtimeData, key = { it.equipmentId }) { data ->
-                    EquipmentStatusCard(data = data, onClick = {
-                        onEquipmentClick(data.equipmentId, data.equipmentName)
-                    })
+                val sortedData = if (state.sortByHealth) {
+                    state.realtimeData.sortedBy { state.healthScores[it.equipmentId]?.score ?: 0.0 }
+                } else {
+                    state.realtimeData
+                }
+
+                items(sortedData, key = { it.equipmentId }) { data ->
+                    EquipmentStatusCard(
+                        data = data,
+                        healthScore = state.healthScores[data.equipmentId],
+                        onCardClick = { onEquipmentClick(data.equipmentId, data.equipmentName) },
+                        onHealthClick = { onHealthDetailClick(data.equipmentId, data.equipmentName) }
+                    )
                 }
             }
         }
@@ -105,7 +126,18 @@ fun MonitorScreen(
 }
 
 @Composable
-fun EquipmentStatusCard(data: MachineData, onClick: () -> Unit) {
+fun EquipmentStatusCard(
+    data: MachineData,
+    healthScore: HealthScore?,
+    onCardClick: () -> Unit,
+    onHealthClick: () -> Unit
+) {
+    val healthColor = when {
+        healthScore == null -> Color.Gray
+        healthScore.score >= 80 -> Color(0xFF43A047)
+        healthScore.score >= 60 -> Color(0xFFFB8C00)
+        else -> Color(0xFFE53935)
+    }
     val statusColor = when (data.status) {
         2 -> Color(0xFFE53935)
         1 -> Color(0xFFFB8C00)
@@ -118,46 +150,70 @@ fun EquipmentStatusCard(data: MachineData, onClick: () -> Unit) {
     }
 
     Card(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+        Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier.size(56.dp).clickable(onClick = onHealthClick),
+                contentAlignment = Alignment.Center
             ) {
-                Column {
-                    Text(data.equipmentName, fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.titleMedium)
-                    if (!data.workshop.isNullOrBlank()) {
-                        Text(data.workshop, style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.outline)
-                    }
-                }
-                Surface(
-                    shape = RoundedCornerShape(16.dp),
-                    color = statusColor.copy(alpha = 0.15f)
-                ) {
-                    Text(
-                        statusText,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                        color = statusColor,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 13.sp
-                    )
-                }
+                CircularProgressIndicator(
+                    progress = { (healthScore?.score ?: 0.0).toFloat() / 100f },
+                    modifier = Modifier.fillMaxSize(),
+                    color = healthColor,
+                    strokeWidth = 4.dp,
+                    trackColor = healthColor.copy(alpha = 0.15f),
+                )
+                Text(
+                    text = if (healthScore != null) "${healthScore.score.toInt()}" else "--",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp,
+                    color = healthColor
+                )
             }
 
-            Spacer(Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                MetricItem("转速", "${data.spindleSpeed.toInt()} rpm", data.spindleSpeed > 3000)
-                MetricItem("温度", "${data.temperature}°C", data.temperature > 60)
-                MetricItem("振动", "${data.vibration} mm/s", data.vibration > 3.5)
-                MetricItem("功率", "${data.power} kW", data.power > 8)
+            Spacer(Modifier.width(14.dp))
+
+            Column(modifier = Modifier.weight(1f).clickable(onClick = onCardClick)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(data.equipmentName, fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleMedium)
+                    Surface(
+                        shape = RoundedCornerShape(16.dp),
+                        color = statusColor.copy(alpha = 0.15f)
+                    ) {
+                        Text(
+                            statusText,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                            color = statusColor,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 13.sp
+                        )
+                    }
+                }
+                if (healthScore != null) {
+                    Text(healthScore.status, style = MaterialTheme.typography.bodySmall, color = healthColor)
+                }
+                if (!data.workshop.isNullOrBlank()) {
+                    Text(data.workshop, style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.outline)
+                }
+
+                Spacer(Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    MetricItem("转速", "${data.spindleSpeed.toInt()} rpm", data.spindleSpeed > 3000)
+                    MetricItem("温度", "${data.temperature}°C", data.temperature > 60)
+                    MetricItem("振动", "${data.vibration} mm/s", data.vibration > 3.5)
+                    MetricItem("功率", "${data.power} kW", data.power > 8)
+                }
             }
         }
     }

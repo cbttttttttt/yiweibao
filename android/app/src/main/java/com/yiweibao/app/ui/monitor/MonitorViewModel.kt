@@ -2,74 +2,73 @@ package com.yiweibao.app.ui.monitor
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yiweibao.app.data.model.DiagnosisResult
+import com.yiweibao.app.data.api.RetrofitClient
+import com.yiweibao.app.data.model.HealthScore
 import com.yiweibao.app.data.model.MachineData
-import com.yiweibao.app.data.repository.DiagnosisRepository
-import com.yiweibao.app.data.repository.MachineDataRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 data class MonitorUiState(
     val realtimeData: List<MachineData> = emptyList(),
-    val historyData: List<MachineData> = emptyList(),
-    val diagnosisResults: List<DiagnosisResult> = emptyList(),
+    val healthScores: Map<Long, HealthScore> = emptyMap(),
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val sortByHealth: Boolean = true
 )
 
 class MonitorViewModel : ViewModel() {
-    private val machineRepo = MachineDataRepository()
-    private val diagnosisRepo = DiagnosisRepository()
     private val _uiState = MutableStateFlow(MonitorUiState())
-    val uiState: StateFlow<MonitorUiState> = _uiState
-    private var pollJob: Job? = null
+    val uiState: StateFlow<MonitorUiState> = _uiState.asStateFlow()
+
+    private val api = RetrofitClient.apiService
+    private var pollingJob: Job? = null
 
     fun startPolling() {
-        pollJob?.cancel()
-        pollJob = viewModelScope.launch {
+        pollingJob?.cancel()
+        pollingJob = viewModelScope.launch {
             while (isActive) {
-                loadRealtime()
+                try {
+                    _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+                    val realtimeResult = api.getMachineDataRealtime()
+                    val healthResult = api.getHealthScores()
+                    if (realtimeResult.code == 200 && healthResult.code == 200) {
+                        val healthMap = healthResult.data!!.associateBy { it.equipmentId }
+                        _uiState.value = _uiState.value.copy(
+                            realtimeData = realtimeResult.data ?: emptyList(),
+                            healthScores = healthMap,
+                            isLoading = false,
+                            error = null
+                        )
+                    } else {
+                        _uiState.value = _uiState.value.copy(
+                            isLoading = false,
+                            error = realtimeResult.message
+                        )
+                    }
+                } catch (e: Exception) {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = e.message ?: "加载失败"
+                    )
+                }
                 delay(5000)
             }
         }
     }
 
-    fun stopPolling() { pollJob?.cancel() }
-
-    fun loadHistory(equipmentId: Long) {
-        viewModelScope.launch {
-            try {
-                val result = machineRepo.getHistory(equipmentId)
-                _uiState.value = _uiState.value.copy(historyData = result.data ?: emptyList())
-                loadDiagnosis(equipmentId)
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(error = "加载历史数据失败: ${e.message}")
-            }
-        }
+    fun stopPolling() {
+        pollingJob?.cancel()
+        pollingJob = null
     }
 
-    fun loadDiagnosis(equipmentId: Long) {
-        viewModelScope.launch {
-            try {
-                val result = diagnosisRepo.getDiagnosis(equipmentId)
-                _uiState.value = _uiState.value.copy(diagnosisResults = result.data ?: emptyList())
-            } catch (_: Exception) { }
-        }
+    fun toggleSort() {
+        _uiState.value = _uiState.value.copy(
+            sortByHealth = !_uiState.value.sortByHealth
+        )
     }
-
-    private suspend fun loadRealtime() {
-        try {
-            val result = machineRepo.getRealtime()
-            _uiState.value = _uiState.value.copy(
-                realtimeData = result.data ?: emptyList(), isLoading = false, error = null)
-        } catch (e: Exception) {
-            _uiState.value = _uiState.value.copy(isLoading = false, error = "加载失败: ${e.message}")
-        }
-    }
-
-    override fun onCleared() { super.onCleared(); pollJob?.cancel() }
 }

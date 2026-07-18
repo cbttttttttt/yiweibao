@@ -216,7 +216,8 @@ fun YiweibaoNavGraph(intent: Intent? = null) {
                 onBack = { navController.popBackStack() },
                 onEquipmentClick = { id, name ->
                     navController.navigate(Screen.EquipmentData.create(id, name))
-                }
+                },
+                onHealthDetailClick = { _, _ -> }  // placeholder until Task 10
             )
         }
 
