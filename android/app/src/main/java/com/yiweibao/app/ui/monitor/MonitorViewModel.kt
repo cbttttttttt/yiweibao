@@ -3,6 +3,7 @@ package com.yiweibao.app.ui.monitor
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yiweibao.app.data.api.RetrofitClient
+import com.yiweibao.app.data.model.DiagnosisResult
 import com.yiweibao.app.data.model.HealthScore
 import com.yiweibao.app.data.model.MachineData
 import kotlinx.coroutines.Job
@@ -16,6 +17,8 @@ import kotlinx.coroutines.launch
 data class MonitorUiState(
     val realtimeData: List<MachineData> = emptyList(),
     val healthScores: Map<Long, HealthScore> = emptyMap(),
+    val historyData: List<MachineData> = emptyList(),
+    val diagnosisResults: List<DiagnosisResult> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null,
     val sortByHealth: Boolean = true
@@ -70,5 +73,18 @@ class MonitorViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(
             sortByHealth = !_uiState.value.sortByHealth
         )
+    }
+
+    fun loadHistory(equipmentId: Long, minutes: Int = 30) {
+        viewModelScope.launch {
+            try {
+                val historyResult = api.getMachineDataHistory(equipmentId, minutes)
+                val diagnosisResult = api.getDiagnosis(equipmentId)
+                _uiState.value = _uiState.value.copy(
+                    historyData = if (historyResult.code == 200) historyResult.data ?: emptyList() else emptyList(),
+                    diagnosisResults = if (diagnosisResult.code == 200) diagnosisResult.data ?: emptyList() else emptyList()
+                )
+            } catch (_: Exception) { }
+        }
     }
 }

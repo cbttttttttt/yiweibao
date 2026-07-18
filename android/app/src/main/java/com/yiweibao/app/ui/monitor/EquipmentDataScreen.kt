@@ -45,7 +45,7 @@ fun EquipmentDataScreen(
     var selectedMinutes by remember { mutableIntStateOf(30) }
 
     LaunchedEffect(equipmentId, selectedMinutes) {
-        viewModel.loadHistory(equipmentId)
+        viewModel.loadHistory(equipmentId, selectedMinutes)
         viewModel.startPolling()
     }
 
@@ -63,7 +63,7 @@ fun EquipmentDataScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { viewModel.loadHistory(equipmentId) }) {
+                    IconButton(onClick = { viewModel.loadHistory(equipmentId, selectedMinutes) }) {
                         Icon(Icons.Default.Refresh, "刷新")
                     }
                 }
