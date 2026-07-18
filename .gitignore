@@ -1,0 +1,7 @@
+android/app/build/
+android/.gradle/
+android/.idea/
+android/build/
+backend/target/
+uploads/
+.claude/

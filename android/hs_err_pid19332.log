@@ -1,0 +1,284 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 1048576 bytes. Error detail: AllocateHeap
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   This process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (allocation.cpp:44), pid=19332, tid=42392
+#
+# JRE version:  (21.0.10) (build )
+# Java VM: OpenJDK 64-Bit Server VM (21.0.10+-14961533-b1163.108, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Xmx64m -Xms64m -Dorg.gradle.appname=gradlew org.gradle.wrapper.GradleWrapperMain --stop
+
+Host: 12th Gen Intel(R) Core(TM) i7-12700H, 20 cores, 15G,  Windows 11 , 64 bit Build 26100 (10.0.26100.8246)
+Time: Mon Jul  6 20:21:53 2026 elapsed time: 2.029920 seconds (0d 0h 0m 2s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001fde0534f00):  JavaThread "Unknown thread" [_thread_in_vm, id=42392, stack(0x00000045f7f00000,0x00000045f8000000) (1024K)]
+
+Stack: [0x00000045f7f00000,0x00000045f8000000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6d78a9]
+V  [jvm.dll+0x8665b3]
+V  [jvm.dll+0x868bde]
+V  [jvm.dll+0x8692c3]
+V  [jvm.dll+0x280ee6]
+V  [jvm.dll+0xbaf47]
+V  [jvm.dll+0x329375]
+V  [jvm.dll+0x82f40d]
+V  [jvm.dll+0x3c0078]
+V  [jvm.dll+0x8185e8]
+V  [jvm.dll+0x45449e]
+V  [jvm.dll+0x455c01]
+C  [jli.dll+0x52ab]
+C  [ucrtbase.dll+0x37b0]
+C  [KERNEL32.DLL+0x2e8d7]
+C  [ntdll.dll+0x8c3fc]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffcfa81b9c8, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+Total: 0
+
+Other Threads:
+
+=>0x000001fde0534f00 (exited) JavaThread "Unknown thread"    [_thread_in_vm, id=42392, stack(0x00000045f7f00000,0x00000045f8000000) (1024K)]
+Total: 1
+
+Threads with active compile tasks:
+Total: 0
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap address: 0x0000000000000000, size: 0 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+ CardTable entry size: 512
+ Card Set container configuration: InlinePtr #cards 5 size 8 Array Of Cards #cards 12 size 40 Howl #buckets 4 coarsen threshold 1843 Howl Bitmap #cards 512 size 80 coarsen threshold 460 Card regions per heap region 1 cards per card region 2048
+
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.005 Loaded shared library D:\soft\Android\jbr\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+ZGC Phase Switch (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Memory protections (0 events):
+No events
+
+Nmethod flushes (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff65c8c0000 - 0x00007ff65c8ca000 	D:\soft\Android\jbr\bin\java.exe
+0x00007ffdc5580000 - 0x00007ffdc57e7000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffdc4fb0000 - 0x00007ffdc5079000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffdc2440000 - 0x00007ffdc2834000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffdc1e50000 - 0x00007ffdc1f9b000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffdb9050000 - 0x00007ffdb9068000 	D:\soft\Android\jbr\bin\jli.dll
+0x00007ffda65e0000 - 0x00007ffda65fb000 	D:\soft\Android\jbr\bin\VCRUNTIME140.dll
+0x00007ffdc4360000 - 0x00007ffdc4525000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffdc3170000 - 0x00007ffdc3197000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffda1560000 - 0x00007ffda17f3000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.8115_none_3e075c82e3354f9c\COMCTL32.dll
+0x00007ffdc4730000 - 0x00007ffdc475b000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffdc4680000 - 0x00007ffdc4729000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffdc20e0000 - 0x00007ffdc220b000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffdc2210000 - 0x00007ffdc22b3000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffdc5290000 - 0x00007ffdc52c2000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ffdbc030000 - 0x00007ffdbc03c000 	D:\soft\Android\jbr\bin\vcruntime140_1.dll
+0x00007ffd8b5f0000 - 0x00007ffd8b67d000 	D:\soft\Android\jbr\bin\msvcp140.dll
+0x00007ffcf9cd0000 - 0x00007ffcfa966000 	D:\soft\Android\jbr\bin\server\jvm.dll
+0x00007ffdc45c0000 - 0x00007ffdc4676000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffdc53d0000 - 0x00007ffdc5477000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffdc3ba0000 - 0x00007ffdc3cb8000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffdc4530000 - 0x00007ffdc45b0000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffdc1cb0000 - 0x00007ffdc1d0e000 	C:\WINDOWS\SYSTEM32\POWRPROF.dll
+0x00007ffdb76c0000 - 0x00007ffdb76f6000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffdb7900000 - 0x00007ffdb790b000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffdc1c90000 - 0x00007ffdc1ca4000 	C:\WINDOWS\SYSTEM32\UMPDC.dll
+0x00007ffdc0bb0000 - 0x00007ffdc0bcb000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ffd8ce50000 - 0x00007ffd8ce5a000 	D:\soft\Android\jbr\bin\jimage.dll
+0x00007ffdbfd60000 - 0x00007ffdbffa2000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffdc3fd0000 - 0x00007ffdc4352000 	C:\WINDOWS\System32\combase.dll
+0x00007ffdc4940000 - 0x00007ffdc4a18000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007ffdbb750000 - 0x00007ffdbb78b000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffdc2030000 - 0x00007ffdc20d5000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffd8b2c0000 - 0x00007ffd8b2e0000 	D:\soft\Android\jbr\bin\java.dll
+
+JVMTI agents: none
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;D:\soft\Android\jbr\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.8115_none_3e075c82e3354f9c;D:\soft\Android\jbr\bin\server
+
+VM Arguments:
+jvm_args: -Xmx64m -Xms64m -Dorg.gradle.appname=gradlew 
+java_command: org.gradle.wrapper.GradleWrapperMain --stop
+java_class_path (initial): D:/code/claude/小学期/android/gradle/wrapper/gradle-wrapper.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 12                                        {product} {ergonomic}
+     uint ConcGCThreads                            = 4                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 15                                        {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 67108864                                  {product} {command line}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 67108864                                  {product} {command line}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 67108864                                  {product} {command line}
+    uintx NonNMethodCodeHeapSize                   = 7602480                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122027880                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122027880                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 67108864                               {manageable} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Release file:
+<release file has not been read>
+Environment Variables:
+JAVA_HOME=D:/soft/Android/jbr
+PATH=C:\Users\dell\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\dell\bin;D:\Program Files\nodejs;D:\Users\dell\AppData\Local\Programs\cursor\resources\app\bin;D:\java\jdk-21.0.8\bin;C:\Program Files\Common Files\Oracle\Java\javapath;D:\soft\vm\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\dotnet;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Bandizip;D:\msys64\mingw64\bin;D:\soft\matlab\bin;D:\java\apache-maven-3.9.11\bin;D:\java\mysql-9.3.0-winx64\bin;D:\java\bin;C:\Program Files (x86)\GnuWin32\bin;D:\Program Files\nodejs;C:\Users\dell\AppData\Local\Programs\Python\Python312\Scripts;C:\Users\dell\AppData\Local\Programs\Python\Python312;C:\Users\dell\AppData\Local\Programs\Python\Launcher;C:\Users\dell\AppData\Local\Microsoft\WindowsApps;D:\code\msys2\ucrt64\bin;D:\java\jdk-21.0.8\bin;D:\java\bin;C:\Users\dell\AppData\Roami;C:\Program Files\Git\cmd;D:\soft\Android-sdk\platform-tools;D:\Users\dell\AppData\Local\Programs\cursor\resources\app\bin;D:\java\jdk-21.0.8\bin;C:\Program Files\Common Files\Oracle\Java\javapath;D:\soft\vm\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\dotnet;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Bandizip;D:\msys64\mingw64\bin;D:\soft\matlab\bin;E:\xshell;E:\xtftp;D:\java\apache-maven-3.9.11\bin;D:\java\mysql-9.3.0-winx64\bin;D:\java\bin;C:\Program Files (x86)\GnuWin32\bin;D:\Program Files\nodejs;C:\Users\dell\AppData\Local\Programs\Python\Python312\Scripts;C:\Users\dell\AppData\Local\Programs\Python\Python312;C:\Users\dell\AppData\Local\Programs\Python\Launcher;C:\Users\dell\AppData\Local\Microsoft\WindowsApps;D:\code\msys2\ucrt64\bin;D:\java\jdk-21.0.8\bin;D:\java\bin;C:\Users\dell\AppData\Roami;C:\Program Files\Git\cmd;C:\Users\dell\AppData\Local\Programs\Python\Python312\Scripts;C:\Users\dell\AppData\Local\Programs\Python\Python312;C:\Users\dell\AppData\Local\Programs\Python\Launcher;C:\Users\dell\AppData\Local\Microsoft\WindowsApps;D:\软件\vs\Microsoft VS Code\bin;C:\Users\dell\AppData\Local\Programs\Microsoft VS Code\bin;D:\code\msys2\ucrt64\bin;D:\java\jdk-21.0.8\bin;D:\java\bin;C:\Users\dell\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\bash.exe;C:\Users\dell\.local\bin\claude.exe;C:\Users\dell\.local\bin;C:\Program Files\nodejs;C:\Users\dell\AppData\Local\Programs\nodejs;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+USERNAME=dell
+SHELL=C:\Program Files\Git\usr\bin\bash.exe
+TERM=xterm-256color
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 154 Stepping 3, GenuineIntel
+TMP=C:\Users\dell\AppData\Local\Temp
+TEMP=C:\Users\dell\AppData\Local\Temp
+
+
+
+
+Periodic native trim disabled
+
+JNI global refs:
+JNI global refs: 0, weak refs: 0
+
+JNI global refs memory usage: 0, weak refs: 0
+
+Process memory usage:
+Resident Set Size: 12484K (0% of 16454388K total physical memory with 651600K free physical memory)
+
+OOME stack traces (most recent first):
+Classloader memory used:
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 26100 (10.0.26100.8246)
+OS uptime: 47 days 9:39 hours
+Hyper-V role detected
+
+CPU: total 20 (initial active 20) (10 cores per cpu, 2 threads per core) family 6 model 154 stepping 3 microcode 0x43b, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, sha, fma, vzeroupper, clflush, clflushopt, clwb, hv, serialize, rdtscp, rdpid, fsrm, f16c, cet_ibt, cet_ss
+Processor Information for processor 0
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 1
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 2
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 3
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 4
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 5
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 6
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 7
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 8
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 9
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 10
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 11
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 12
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 13
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 14
+  Max Mhz: 2300, Current Mhz: 1488, Mhz Limit: 2300
+Processor Information for processor 15
+  Max Mhz: 2300, Current Mhz: 1488, Mhz Limit: 2300
+Processor Information for processor 16
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 17
+  Max Mhz: 2300, Current Mhz: 1488, Mhz Limit: 2300
+Processor Information for processor 18
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+Processor Information for processor 19
+  Max Mhz: 2300, Current Mhz: 2300, Mhz Limit: 2300
+
+Memory: 4k page, system-wide physical 16068M (636M free)
+TotalPageFile size 34788M (AvailPageFile size 3M)
+current process WorkingSet (physical memory assigned to process): 12M, peak: 12M
+current process commit charge ("private bytes"): 23M, peak: 24M
+
+vm_info: OpenJDK 64-Bit Server VM (21.0.10+-14961533-b1163.108) for windows-amd64 JRE (21.0.10+-14961533-b1163.108), built on 2026-03-02T19:58:50Z by "builder" with MS VC++ 16.10 / 16.11 (VS2019)
+
+END.
