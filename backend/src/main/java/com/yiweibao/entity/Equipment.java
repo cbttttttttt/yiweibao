@@ -36,6 +36,11 @@ public class Equipment {
     @Column(length = 50)
     private String manager;
 
+    private Double ratedSpindleSpeed;  // 额定主轴转速 rpm
+    private Double ratedPower;         // 额定功率 kW
+    private Double ratedCurrent;       // 额定电流 A
+    private Double normalTempMax;      // 正常运行温度上限 °C
+
     private LocalDate purchaseDate;
 
     private LocalDate startDate;
@@ -71,6 +76,14 @@ public class Equipment {
     public void setWorkshop(String workshop) { this.workshop = workshop; }
     public String getManager() { return manager; }
     public void setManager(String manager) { this.manager = manager; }
+    public Double getRatedSpindleSpeed() { return ratedSpindleSpeed; }
+    public void setRatedSpindleSpeed(Double v) { this.ratedSpindleSpeed = v; }
+    public Double getRatedPower() { return ratedPower; }
+    public void setRatedPower(Double v) { this.ratedPower = v; }
+    public Double getRatedCurrent() { return ratedCurrent; }
+    public void setRatedCurrent(Double v) { this.ratedCurrent = v; }
+    public Double getNormalTempMax() { return normalTempMax; }
+    public void setNormalTempMax(Double v) { this.normalTempMax = v; }
     public LocalDate getPurchaseDate() { return purchaseDate; }
     public void setPurchaseDate(LocalDate purchaseDate) { this.purchaseDate = purchaseDate; }
     public LocalDate getStartDate() { return startDate; }

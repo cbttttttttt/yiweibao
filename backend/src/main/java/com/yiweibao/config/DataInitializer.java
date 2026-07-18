@@ -56,41 +56,59 @@ public class DataInitializer implements CommandLineRunner {
         User operator1 = createUser("operator1", "123456", "赵操作", 0, "13800000004");
 
         Equipment e1 = createEquipment("EQ-001", "数控车床 CK6150", "CK6150", "Φ500×1500mm", "沈阳机床", "机加车间-A区", "机加车间", "张管理",
-                LocalDate.of(2020, 3, 15), LocalDate.of(2020, 4, 1), 0);
+                LocalDate.of(2020, 3, 15), LocalDate.of(2020, 4, 1), 0,
+                1400.0, 7.5, 16.0, 70.0);
         Equipment e2 = createEquipment("EQ-002", "立式加工中心 VMC850", "VMC850", "850×500×500mm", "大连机床", "机加车间-A区", "机加车间", "张管理",
-                LocalDate.of(2019, 6, 20), LocalDate.of(2019, 7, 1), 0);
+                LocalDate.of(2019, 6, 20), LocalDate.of(2019, 7, 1), 0,
+                8000.0, 11.0, 24.0, 75.0);
         Equipment e3 = createEquipment("EQ-003", "数控铣床 XK7132", "XK7132", "320×1000mm", "云南CY", "机加车间-B区", "机加车间", "张管理",
-                LocalDate.of(2021, 1, 10), LocalDate.of(2021, 2, 1), 1);
+                LocalDate.of(2021, 1, 10), LocalDate.of(2021, 2, 1), 1,
+                6000.0, 5.5, 12.0, 70.0);
         Equipment e4 = createEquipment("EQ-004", "精密磨床 M1432", "M1432", "Φ320×1000mm", "上海机床", "机加车间-B区", "机加车间", "张管理",
-                LocalDate.of(2018, 9, 5), LocalDate.of(2018, 10, 1), 0);
+                LocalDate.of(2018, 9, 5), LocalDate.of(2018, 10, 1), 0,
+                3000.0, 5.5, 12.0, 65.0);
         Equipment e5 = createEquipment("EQ-005", "数控冲床 HP300", "HP300", "300kN", "济南二机", "冲压车间", "冲压车间", "赵操作",
-                LocalDate.of(2022, 5, 12), LocalDate.of(2022, 6, 1), 2);
+                LocalDate.of(2022, 5, 12), LocalDate.of(2022, 6, 1), 2,
+                500.0, 7.5, 16.0, 70.0);
         Equipment e6 = createEquipment("EQ-006", "卧式镗床 TP619", "TP619", "Φ90mm", "武汉重型", "机加车间-A区", "机加车间", "张管理",
-                LocalDate.of(2017, 3, 20), LocalDate.of(2017, 4, 1), 0);
+                LocalDate.of(2017, 3, 20), LocalDate.of(2017, 4, 1), 0,
+                2000.0, 11.0, 24.0, 70.0);
         Equipment e7 = createEquipment("EQ-007", "龙门铣床 X2020", "X2020", "2000×6000mm", "济南二机", "机加车间-C区", "机加车间", "张管理",
-                LocalDate.of(2018, 11, 8), LocalDate.of(2019, 1, 1), 0);
+                LocalDate.of(2018, 11, 8), LocalDate.of(2019, 1, 1), 0,
+                6000.0, 15.0, 32.0, 75.0);
         Equipment e8 = createEquipment("EQ-008", "钻铣加工中心 T600", "T600", "600×400mm", "大连机床", "装配车间", "装配车间", "李维修",
-                LocalDate.of(2023, 2, 15), LocalDate.of(2023, 3, 1), 0);
+                LocalDate.of(2023, 2, 15), LocalDate.of(2023, 3, 1), 0,
+                8000.0, 7.5, 16.0, 70.0);
         Equipment e9 = createEquipment("EQ-009", "数控滚齿机 Y3150", "Y3150", "Φ500×M8", "重庆机床", "机加车间-B区", "机加车间", "张管理",
-                LocalDate.of(2020, 7, 22), LocalDate.of(2020, 8, 1), 0);
+                LocalDate.of(2020, 7, 22), LocalDate.of(2020, 8, 1), 0,
+                2000.0, 5.5, 12.0, 70.0);
         Equipment e10 = createEquipment("EQ-010", "剪板机 QC12Y", "QC12Y", "6×3200mm", "天水锻压", "冲压车间", "冲压车间", "赵操作",
-                LocalDate.of(2021, 9, 10), LocalDate.of(2021, 10, 1), 0);
+                LocalDate.of(2021, 9, 10), LocalDate.of(2021, 10, 1), 0,
+                0.0, 7.5, 16.0, 60.0);
         Equipment e11 = createEquipment("EQ-011", "电火花成型机 D7140", "D7140", "400×300mm", "苏州三光", "机加车间-C区", "机加车间", "张管理",
-                LocalDate.of(2022, 4, 5), LocalDate.of(2022, 5, 1), 0);
+                LocalDate.of(2022, 4, 5), LocalDate.of(2022, 5, 1), 0,
+                0.0, 4.0, 9.0, 65.0);
         Equipment e12 = createEquipment("EQ-012", "数控折弯机 WC67Y", "WC67Y", "100/3200", "天水锻压", "冲压车间", "冲压车间", "赵操作",
-                LocalDate.of(2020, 12, 18), LocalDate.of(2021, 1, 1), 1);
+                LocalDate.of(2020, 12, 18), LocalDate.of(2021, 1, 1), 1,
+                0.0, 7.5, 16.0, 65.0);
         Equipment e13 = createEquipment("EQ-013", "卧式车床 CW6180", "CW6180", "Φ800×3000mm", "沈阳机床", "机加车间-A区", "机加车间", "张管理",
-                LocalDate.of(2016, 5, 30), LocalDate.of(2016, 6, 15), 0);
+                LocalDate.of(2016, 5, 30), LocalDate.of(2016, 6, 15), 0,
+                800.0, 11.0, 24.0, 75.0);
         Equipment e14 = createEquipment("EQ-014", "立式钻床 Z5140", "Z5140", "Φ40mm", "杭州机床", "装配车间", "装配车间", "李维修",
-                LocalDate.of(2019, 8, 15), LocalDate.of(2019, 9, 1), 0);
+                LocalDate.of(2019, 8, 15), LocalDate.of(2019, 9, 1), 0,
+                3000.0, 4.0, 9.0, 65.0);
         Equipment e15 = createEquipment("EQ-015", "万能工具磨床 M6025", "M6025", "Φ250mm", "武汉机床", "机加车间-C区", "机加车间", "张管理",
-                LocalDate.of(2021, 6, 25), LocalDate.of(2021, 7, 15), 0);
+                LocalDate.of(2021, 6, 25), LocalDate.of(2021, 7, 15), 0,
+                4000.0, 3.0, 7.0, 65.0);
         Equipment e16 = createEquipment("EQ-016", "火焰切割机 GZ4000", "GZ4000", "4000×12000mm", "上海通用", "冲压车间", "冲压车间", "赵操作",
-                LocalDate.of(2023, 1, 10), LocalDate.of(2023, 2, 1), 0);
+                LocalDate.of(2023, 1, 10), LocalDate.of(2023, 2, 1), 0,
+                0.0, 5.5, 12.0, 60.0);
         Equipment e17 = createEquipment("EQ-017", "卧式加工中心 HMC630", "HMC630", "630×630mm", "宁夏小巨人", "机加车间-B区", "机加车间", "张管理",
-                LocalDate.of(2022, 10, 8), LocalDate.of(2022, 11, 1), 0);
+                LocalDate.of(2022, 10, 8), LocalDate.of(2022, 11, 1), 0,
+                6000.0, 15.0, 32.0, 75.0);
         Equipment e18 = createEquipment("EQ-018", "液压机 YT32-315", "YT32-315", "3150kN", "合肥锻压", "冲压车间", "冲压车间", "赵操作",
-                LocalDate.of(2019, 12, 1), LocalDate.of(2020, 1, 1), 3);
+                LocalDate.of(2019, 12, 1), LocalDate.of(2020, 1, 1), 3,
+                0.0, 15.0, 32.0, 70.0);
 
         createWorkOrder(e3, "赵操作", "主轴异响严重，加工精度不达标", "机械故障", 1, 1, "李维修",
                 "主轴轴承磨损导致径向跳动超差", "更换主轴前轴承组，重新校准精度", "SKF 7014AC 角接触球轴承×2", 0);
@@ -120,7 +138,9 @@ public class DataInitializer implements CommandLineRunner {
 
     private Equipment createEquipment(String code, String name, String model, String spec,
                                        String manufacturer, String location, String workshop,
-                                       String manager, LocalDate purchaseDate, LocalDate startDate, int status) {
+                                       String manager, LocalDate purchaseDate, LocalDate startDate,
+                                       int status, Double ratedSpindleSpeed, Double ratedPower,
+                                       Double ratedCurrent, Double normalTempMax) {
         Equipment e = new Equipment();
         e.setCode(code);
         e.setName(name);
@@ -133,6 +153,10 @@ public class DataInitializer implements CommandLineRunner {
         e.setPurchaseDate(purchaseDate);
         e.setStartDate(startDate);
         e.setStatus(status);
+        e.setRatedSpindleSpeed(ratedSpindleSpeed);
+        e.setRatedPower(ratedPower);
+        e.setRatedCurrent(ratedCurrent);
+        e.setNormalTempMax(normalTempMax);
         e.setCreatedAt(LocalDateTime.now());
         Equipment saved = equipmentRepository.save(e);
         generateQRCode(saved);
