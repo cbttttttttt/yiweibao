@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
@@ -25,9 +26,17 @@ public class HealthService {
     }
 
     public List<HealthScore> getHealthScores() {
-        List<MachineData> latestList = machineDataRepository.findLatestForAllEquipment();
-        return latestList.stream()
-            .map(md -> computeScore(md, avgRecentData(md.getEquipment().getId(), 10)))
+        List<MachineData> recent = machineDataRepository.findAllSince(
+            LocalDateTime.now().minusMinutes(10));
+        if (recent.isEmpty()) return List.of();
+
+        return recent.stream()
+            .collect(Collectors.groupingBy(md -> md.getEquipment().getId()))
+            .entrySet().stream()
+            .map(e -> {
+                MachineData avg = average(e.getValue());
+                return computeScore(avg);
+            })
             .sorted(Comparator.comparingDouble(HealthScore::score))
             .collect(Collectors.toList());
     }
@@ -44,7 +53,7 @@ public class HealthService {
         }
 
         MachineData avg = average(recent10Min);
-        HealthScore score = computeScore(avg, avg);
+        HealthScore score = computeScore(avg);
         List<FactorDetail> factors = computeFactors(avg, eq);
         String rul = computeRUL(equipmentId);
 
@@ -54,12 +63,6 @@ public class HealthService {
             factors, rul,
             score.vibScore(), score.tempScore(), score.elecScore()
         );
-    }
-
-    private MachineData avgRecentData(Long equipmentId, int minutes) {
-        List<MachineData> data = machineDataRepository.findByEquipmentAndTimeRange(
-            equipmentId, LocalDateTime.now().minusMinutes(minutes), LocalDateTime.now());
-        return data.isEmpty() ? null : average(data);
     }
 
     private MachineData average(List<MachineData> list) {
@@ -84,7 +87,7 @@ public class HealthService {
         return avg;
     }
 
-    HealthScore computeScore(MachineData avg, MachineData recentAvg) {
+    HealthScore computeScore(MachineData avg) {
         if (avg == null) return new HealthScore(0L, "", "", 0.0, "数据不足", 0, 0, 0);
 
         Equipment eq = avg.getEquipment();
@@ -93,14 +96,17 @@ public class HealthService {
         double ratedCurrent = eq.getRatedCurrent() != null ? eq.getRatedCurrent() : 12.0;
         double baseVib = ratedPower > 10 ? 2.0 : ratedPower > 5 ? 1.5 : 1.0;
 
-        double vibScore = Math.max(0, 100 - (avg.getVibration() / baseVib - 1.0) * 200);
+        // Vibration: penalty 100 means 2x baseline = 0 score (ISO 10816 zone B/C ~2.5-3x)
+        double vibScore = Math.max(0, 100 - (avg.getVibration() / baseVib - 1.0) * 100);
         vibScore = Math.min(100, vibScore);
 
-        double tempScore = Math.max(0, 100 - (avg.getTemperature() / normalTempMax - 1.0) * 300);
+        // Temperature: penalty 150 means ~67% above normal = 0 score
+        double tempScore = Math.max(0, 100 - (avg.getTemperature() / normalTempMax - 1.0) * 150);
         tempScore = Math.min(100, tempScore);
 
-        double currentDev = Math.max(0, (avg.getCurrent() / ratedCurrent - 1.0) * 200);
-        double powerDev = Math.max(0, (avg.getPower() / ratedPower - 1.0) * 200);
+        // Electric: current and power deviation, penalty 100
+        double currentDev = Math.max(0, (avg.getCurrent() / ratedCurrent - 1.0) * 100);
+        double powerDev = Math.max(0, (avg.getPower() / ratedPower - 1.0) * 100);
         double elecScore = Math.max(0, 100 - (currentDev * 0.5 + powerDev * 0.5));
         elecScore = Math.min(100, elecScore);
 

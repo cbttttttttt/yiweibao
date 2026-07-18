@@ -51,7 +51,7 @@ class HealthServiceTest {
     void healthyEquipmentScoresAbove80() {
         Equipment e = makeEquipment();
         MachineData md = makeData(e, 1.2, 45.0, 12.0, 5.5);
-        var score = healthService.computeScore(md, md);
+        var score = healthService.computeScore(md);
         assertThat(score.score()).isGreaterThanOrEqualTo(80.0);
         assertThat(score.status()).isEqualTo("健康");
     }
@@ -60,13 +60,13 @@ class HealthServiceTest {
     void degradedEquipmentScoresBelow60() {
         Equipment e = makeEquipment();
         MachineData md = makeData(e, 5.5, 80.0, 25.0, 12.0);
-        var score = healthService.computeScore(md, md);
+        var score = healthService.computeScore(md);
         assertThat(score.score()).isLessThan(60.0);
     }
 
     @Test
     void nullDataReturnsInsufficient() {
-        var score = healthService.computeScore(null, null);
+        var score = healthService.computeScore(null);
         assertThat(score.status()).isEqualTo("数据不足");
         assertThat(score.score()).isEqualTo(0.0);
     }
@@ -75,7 +75,7 @@ class HealthServiceTest {
     void scoreNeverBelowZero() {
         Equipment e = makeEquipment();
         MachineData md = makeData(e, 100.0, 200.0, 100.0, 50.0);
-        var score = healthService.computeScore(md, md);
+        var score = healthService.computeScore(md);
         assertThat(score.score()).isGreaterThanOrEqualTo(0.0);
     }
 
@@ -83,20 +83,20 @@ class HealthServiceTest {
     void scoreNeverAbove100() {
         Equipment e = makeEquipment();
         MachineData md = makeData(e, 0.1, 20.0, 1.0, 0.5);
-        var score = healthService.computeScore(md, md);
+        var score = healthService.computeScore(md);
         assertThat(score.score()).isLessThanOrEqualTo(100.0);
     }
 
     @Test
     void statusTransitionsCorrectly() {
         Equipment e = makeEquipment();
-        var healthy = healthService.computeScore(makeData(e, 1.0, 40.0, 10.0, 5.0), null);
+        var healthy = healthService.computeScore(makeData(e, 1.0, 40.0, 10.0, 5.0));
         assertThat(healthy.status()).isEqualTo("健康");
 
-        var attention = healthService.computeScore(makeData(e, 2.0, 55.0, 14.0, 6.5), null);
+        var attention = healthService.computeScore(makeData(e, 2.5, 55.0, 14.0, 6.5));
         assertThat(attention.status()).isEqualTo("关注");
 
-        var alarm = healthService.computeScore(makeData(e, 6.0, 75.0, 28.0, 14.0), null);
+        var alarm = healthService.computeScore(makeData(e, 6.0, 75.0, 28.0, 14.0));
         assertThat(alarm.status()).isEqualTo("告警");
     }
 }

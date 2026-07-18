@@ -7,6 +7,7 @@ D:\code\claude\yi\backend\src\main\java\com\yiweibao\controller\AuthController.j
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\controller\DiagnosisController.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\controller\EquipmentController.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\controller\FileController.java
+D:\code\claude\yi\backend\src\main\java\com\yiweibao\controller\HealthController.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\controller\MachineDataController.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\controller\StatisticsController.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\controller\WorkOrderController.java
@@ -27,11 +28,13 @@ D:\code\claude\yi\backend\src\main\java\com\yiweibao\dto\WorkOrderCreateRequest.
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\entity\DiagnosisCase.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\entity\DiagnosisRule.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\entity\Equipment.java
+D:\code\claude\yi\backend\src\main\java\com\yiweibao\entity\EquipmentHealth.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\entity\MachineData.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\entity\User.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\entity\WorkOrder.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\repository\DiagnosisCaseRepository.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\repository\DiagnosisRuleRepository.java
+D:\code\claude\yi\backend\src\main\java\com\yiweibao\repository\EquipmentHealthRepository.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\repository\EquipmentRepository.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\repository\MachineDataRepository.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\repository\UserRepository.java
@@ -39,8 +42,10 @@ D:\code\claude\yi\backend\src\main\java\com\yiweibao\repository\WorkOrderReposit
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\security\JwtAuthFilter.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\security\JwtTokenUtil.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\service\AuthService.java
+D:\code\claude\yi\backend\src\main\java\com\yiweibao\service\DegradationEngine.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\service\DiagnosisService.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\service\EquipmentService.java
+D:\code\claude\yi\backend\src\main\java\com\yiweibao\service\HealthService.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\service\MachineDataGenerator.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\service\MachineDataService.java
 D:\code\claude\yi\backend\src\main\java\com\yiweibao\service\StatisticsService.java

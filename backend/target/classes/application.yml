@@ -28,3 +28,5 @@ app:
     expiration-ms: 86400000
   upload:
     path: ./uploads
+  simulation:
+    acceleration: 0.3  # ~12-24h degradation cycle at normal load

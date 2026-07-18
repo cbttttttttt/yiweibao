@@ -31,5 +31,8 @@ public interface MachineDataRepository extends JpaRepository<MachineData, Long> 
            "AND md.timestamp = (SELECT MAX(m.timestamp) FROM MachineData m WHERE m.equipment.id = :equipmentId)")
     MachineData findLatestByEquipment(@Param("equipmentId") Long equipmentId);
 
+    @Query("SELECT md FROM MachineData md WHERE md.timestamp >= :since ORDER BY md.equipment.id, md.timestamp ASC")
+    List<MachineData> findAllSince(@Param("since") LocalDateTime since);
+
     void deleteByTimestampBefore(LocalDateTime threshold);
 }

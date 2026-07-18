@@ -5,8 +5,12 @@ com\yiweibao\dto\EquipmentRequest.class
 com\yiweibao\controller\FileController.class
 com\yiweibao\entity\DiagnosisRule.class
 com\yiweibao\dto\MachineDataVO.class
+com\yiweibao\entity\EquipmentHealth.class
+com\yiweibao\controller\HealthController.class
 com\yiweibao\service\DiagnosisService$4.class
+com\yiweibao\service\HealthService$FactorDetail.class
 com\yiweibao\security\JwtTokenUtil.class
+com\yiweibao\repository\EquipmentHealthRepository.class
 com\yiweibao\dto\WorkOrderCreateRequest.class
 com\yiweibao\config\SecurityConfig.class
 com\yiweibao\config\CorsConfig.class
@@ -19,10 +23,12 @@ com\yiweibao\repository\EquipmentRepository.class
 com\yiweibao\controller\WorkOrderController.class
 com\yiweibao\entity\WorkOrder.class
 com\yiweibao\config\GlobalExceptionHandler.class
+com\yiweibao\service\HealthService$HealthDetail.class
 com\yiweibao\repository\DiagnosisCaseRepository.class
 com\yiweibao\dto\FaultTypeStat.class
 com\yiweibao\service\DiagnosisService$2.class
 com\yiweibao\service\DiagnosisService$5.class
+com\yiweibao\service\HealthService.class
 com\yiweibao\dto\LoginRequest.class
 com\yiweibao\dto\DiagnosisCaseVO.class
 com\yiweibao\dto\FaultTypeAvgTime.class
@@ -37,6 +43,7 @@ com\yiweibao\repository\WorkOrderRepository.class
 com\yiweibao\dto\DiagnosisVO.class
 com\yiweibao\service\EquipmentService.class
 com\yiweibao\YiweibaoApplication.class
+com\yiweibao\service\DegradationEngine.class
 com\yiweibao\dto\LoginResponse.class
 com\yiweibao\service\StatisticsService.class
 com\yiweibao\entity\DiagnosisCase.class
@@ -52,3 +59,4 @@ com\yiweibao\config\WebMvcConfig.class
 com\yiweibao\controller\EquipmentController.class
 com\yiweibao\repository\MachineDataRepository.class
 com\yiweibao\entity\User.class
+com\yiweibao\service\HealthService$HealthScore.class
