@@ -21,6 +21,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -47,6 +48,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        backfillRatedParams();
         if (diagnosisRuleRepository.count() == 0) seedDiagnosisRules();
         if (userRepository.count() > 0) return;
 
@@ -129,6 +131,38 @@ public class DataInitializer implements CommandLineRunner {
         createWorkOrder(e10, "赵操作", "剪切刀片磨损，切口毛刺严重", "机械故障", 0, 2, "王师傅",
                 "刀片刃口钝化，间隙调整不当", "更换上下剪切刀片，重新调整剪切间隙至0.08mm", "剪切刀片组×1", 2);
         createWorkOrder(e13, "赵操作", "尾座套筒无法正常伸缩", "机械故障", 0, 0, null, null, null, null, 0);
+    }
+
+    private void backfillRatedParams() {
+        List<Equipment> all = equipmentRepository.findAll();
+        for (Equipment e : all) {
+            if (e.getRatedPower() != null) continue;
+            String model = e.getModel();
+            if (model == null) continue;
+            switch (model) {
+                case "CK6150" -> { e.setRatedSpindleSpeed(1400.0); e.setRatedPower(7.5); e.setRatedCurrent(16.0); e.setNormalTempMax(70.0); }
+                case "VMC850" -> { e.setRatedSpindleSpeed(8000.0); e.setRatedPower(11.0); e.setRatedCurrent(24.0); e.setNormalTempMax(75.0); }
+                case "XK7132" -> { e.setRatedSpindleSpeed(6000.0); e.setRatedPower(5.5); e.setRatedCurrent(12.0); e.setNormalTempMax(70.0); }
+                case "M1432"  -> { e.setRatedSpindleSpeed(3000.0); e.setRatedPower(5.5); e.setRatedCurrent(12.0); e.setNormalTempMax(65.0); }
+                case "HP300"  -> { e.setRatedSpindleSpeed(500.0);  e.setRatedPower(7.5); e.setRatedCurrent(16.0); e.setNormalTempMax(70.0); }
+                case "TP619"  -> { e.setRatedSpindleSpeed(2000.0); e.setRatedPower(11.0); e.setRatedCurrent(24.0); e.setNormalTempMax(70.0); }
+                case "X2020"  -> { e.setRatedSpindleSpeed(6000.0); e.setRatedPower(15.0); e.setRatedCurrent(32.0); e.setNormalTempMax(75.0); }
+                case "T600"   -> { e.setRatedSpindleSpeed(8000.0); e.setRatedPower(7.5); e.setRatedCurrent(16.0); e.setNormalTempMax(70.0); }
+                case "Y3150"  -> { e.setRatedSpindleSpeed(2000.0); e.setRatedPower(5.5); e.setRatedCurrent(12.0); e.setNormalTempMax(70.0); }
+                case "QC12Y"  -> { e.setRatedSpindleSpeed(0.0);    e.setRatedPower(7.5); e.setRatedCurrent(16.0); e.setNormalTempMax(60.0); }
+                case "D7140"  -> { e.setRatedSpindleSpeed(0.0);    e.setRatedPower(4.0); e.setRatedCurrent(9.0);  e.setNormalTempMax(65.0); }
+                case "WC67Y"  -> { e.setRatedSpindleSpeed(0.0);    e.setRatedPower(7.5); e.setRatedCurrent(16.0); e.setNormalTempMax(65.0); }
+                case "CW6180" -> { e.setRatedSpindleSpeed(800.0);  e.setRatedPower(11.0); e.setRatedCurrent(24.0); e.setNormalTempMax(75.0); }
+                case "Z5140"  -> { e.setRatedSpindleSpeed(3000.0); e.setRatedPower(4.0); e.setRatedCurrent(9.0);  e.setNormalTempMax(65.0); }
+                case "M6025"  -> { e.setRatedSpindleSpeed(4000.0); e.setRatedPower(3.0); e.setRatedCurrent(7.0);  e.setNormalTempMax(65.0); }
+                case "GZ4000" -> { e.setRatedSpindleSpeed(0.0);    e.setRatedPower(5.5); e.setRatedCurrent(12.0); e.setNormalTempMax(60.0); }
+                case "HMC630" -> { e.setRatedSpindleSpeed(6000.0); e.setRatedPower(15.0); e.setRatedCurrent(32.0); e.setNormalTempMax(75.0); }
+                case "YT32-315" -> { e.setRatedSpindleSpeed(0.0);  e.setRatedPower(15.0); e.setRatedCurrent(32.0); e.setNormalTempMax(70.0); }
+            }
+            if (e.getRatedPower() != null) {
+                equipmentRepository.save(e);
+            }
+        }
     }
 
     private User createUser(String username, String password, String realName, int role, String phone) {
