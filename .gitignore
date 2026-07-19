@@ -8,4 +8,5 @@ backend/${env.MAVEN_HOME}/
 uploads/
 .claude/
 .superpowers/
+docs/
 *.log
