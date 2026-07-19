@@ -3,6 +3,8 @@ android/.gradle/
 android/.idea/
 android/build/
 backend/target/
+backend/uploads/
+backend/${env.MAVEN_HOME}/
 uploads/
 .claude/
 .superpowers/
