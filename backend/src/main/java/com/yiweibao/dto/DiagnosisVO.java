@@ -11,6 +11,12 @@ public class DiagnosisVO {
     private Integer priority;
     private String alternativeActions;
     private Integer verifiedCount;
+    private String keywords;
+    private String repairSteps;
+    private String toolsRequired;
+    private String safetyNotes;
+    private Double estimatedHours;
+    private String applicableModels;
 
     public DiagnosisVO() {}
 
@@ -26,6 +32,12 @@ public class DiagnosisVO {
         vo.priority = rule.getPriority();
         vo.verifiedCount = rule.getVerifiedCount();
         vo.alternativeActions = rule.getAlternativeActions();
+        vo.keywords = rule.getKeywords();
+        vo.repairSteps = rule.getRepairSteps();
+        vo.toolsRequired = rule.getToolsRequired();
+        vo.safetyNotes = rule.getSafetyNotes();
+        vo.estimatedHours = rule.getEstimatedHours();
+        vo.applicableModels = rule.getApplicableModels();
         return vo;
     }
 
@@ -49,4 +61,16 @@ public class DiagnosisVO {
     public void setVerifiedCount(Integer n) { this.verifiedCount = n; }
     public String getAlternativeActions() { return alternativeActions; }
     public void setAlternativeActions(String s) { this.alternativeActions = s; }
+    public String getKeywords() { return keywords; }
+    public void setKeywords(String s) { this.keywords = s; }
+    public String getRepairSteps() { return repairSteps; }
+    public void setRepairSteps(String s) { this.repairSteps = s; }
+    public String getToolsRequired() { return toolsRequired; }
+    public void setToolsRequired(String s) { this.toolsRequired = s; }
+    public String getSafetyNotes() { return safetyNotes; }
+    public void setSafetyNotes(String s) { this.safetyNotes = s; }
+    public Double getEstimatedHours() { return estimatedHours; }
+    public void setEstimatedHours(Double d) { this.estimatedHours = d; }
+    public String getApplicableModels() { return applicableModels; }
+    public void setApplicableModels(String s) { this.applicableModels = s; }
 }

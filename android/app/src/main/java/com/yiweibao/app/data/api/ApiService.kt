@@ -91,6 +91,26 @@ interface ApiService {
     @GET("api/diagnosis/rules")
     suspend fun getDiagnosisRules(): ApiResponse<List<DiagnosisResult>>
 
+    @GET("api/diagnosis/rules")
+    suspend fun getDiagnosisRulesByCategory(
+        @Query("category") category: String
+    ): ApiResponse<List<DiagnosisResult>>
+
+    @GET("api/diagnosis/rules/search")
+    suspend fun searchDiagnosisRules(
+        @Query("keyword") keyword: String,
+        @Query("category") category: String? = null
+    ): ApiResponse<List<DiagnosisResult>>
+
+    @GET("api/diagnosis/cases/search")
+    suspend fun searchDiagnosisCases(
+        @Query("keyword") keyword: String,
+        @Query("category") category: String? = null
+    ): ApiResponse<List<DiagnosisCaseVO>>
+
+    @GET("api/diagnosis/categories")
+    suspend fun getDiagnosisCategories(): ApiResponse<List<String>>
+
     @GET("api/health/scores")
     suspend fun getHealthScores(): ApiResponse<List<HealthScore>>
 

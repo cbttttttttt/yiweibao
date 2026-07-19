@@ -61,9 +61,40 @@ public class DiagnosisController {
     }
 
     @GetMapping("/rules")
-    public ApiResponse<List<DiagnosisVO>> listRules() {
-        List<DiagnosisVO> rules = diagnosisService.listActiveRules()
+    public ApiResponse<List<DiagnosisVO>> listRules(
+            @RequestParam(required = false) String category) {
+        List<DiagnosisVO> rules;
+        if (category != null && !category.isBlank()) {
+            rules = diagnosisService.listRulesByCategory(category)
+                    .stream().map(DiagnosisVO::from).toList();
+        } else {
+            rules = diagnosisService.listActiveRules()
+                    .stream().map(DiagnosisVO::from).toList();
+        }
+        return ApiResponse.success(rules);
+    }
+
+    @GetMapping("/rules/search")
+    public ApiResponse<List<DiagnosisVO>> searchRules(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String category) {
+        List<DiagnosisVO> rules = diagnosisService.searchRules(keyword, category)
                 .stream().map(DiagnosisVO::from).toList();
         return ApiResponse.success(rules);
+    }
+
+    @GetMapping("/cases/search")
+    public ApiResponse<List<DiagnosisCaseVO>> searchCases(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String category) {
+        return ApiResponse.success(diagnosisService.searchCases(keyword, category));
+    }
+
+    @GetMapping("/categories")
+    public ApiResponse<List<String>> listCategories() {
+        List<String> categories = diagnosisService.listActiveRules()
+                .stream().map(r -> r.getFaultCategory())
+                .distinct().sorted().toList();
+        return ApiResponse.success(categories);
     }
 }

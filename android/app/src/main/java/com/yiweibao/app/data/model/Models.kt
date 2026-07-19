@@ -126,7 +126,29 @@ data class DiagnosisResult(
     val severityLevel: Int,
     val priority: Int,
     val verifiedCount: Int,
-    val alternativeActions: String? = null
+    val alternativeActions: String? = null,
+    val keywords: String? = null,
+    val repairSteps: String? = null,
+    val toolsRequired: String? = null,
+    val safetyNotes: String? = null,
+    val estimatedHours: Double? = null,
+    val applicableModels: String? = null
+)
+
+data class DiagnosisCaseVO(
+    val id: Long,
+    val workOrderId: Long,
+    val orderNo: String,
+    val equipmentId: Long,
+    val equipmentName: String,
+    val faultCategory: String,
+    val faultDesc: String,
+    val diagnosis: String,
+    val repairAction: String,
+    val replacedParts: String? = null,
+    val repairEngineer: String? = null,
+    val status: Int,
+    val createdAt: String
 )
 
 data class MachineData(

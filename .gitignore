@@ -5,3 +5,5 @@ android/build/
 backend/target/
 uploads/
 .claude/
+.superpowers/
+*.log

@@ -191,6 +191,37 @@ public class DiagnosisService {
         return ruleRepo.findByActiveTrueOrderByPriorityAsc();
     }
 
+    public List<DiagnosisRule> listRulesByCategory(String faultCategory) {
+        return ruleRepo.findByFaultCategoryAndActiveTrueOrderByPriorityAsc(faultCategory);
+    }
+
+    public List<DiagnosisRule> searchRules(String keyword, String faultCategory) {
+        if (keyword == null || keyword.isBlank()) {
+            return faultCategory != null && !faultCategory.isBlank()
+                    ? listRulesByCategory(faultCategory) : listActiveRules();
+        }
+        return faultCategory != null && !faultCategory.isBlank()
+                ? ruleRepo.searchByCategoryAndKeyword(faultCategory, keyword)
+                : ruleRepo.searchByKeyword(keyword);
+    }
+
+    public List<DiagnosisCaseVO> searchCases(String keyword, String faultCategory) {
+        List<DiagnosisCase> cases;
+        if (keyword == null || keyword.isBlank()) {
+            cases = caseRepo.findByEquipmentIdOrderByCreatedAtDesc(null);
+            if (faultCategory != null && !faultCategory.isBlank()) {
+                cases = cases.stream()
+                        .filter(c -> faultCategory.equals(c.getFaultCategory()))
+                        .toList();
+            }
+            return cases.stream().map(DiagnosisCaseVO::from).toList();
+        }
+        cases = faultCategory != null && !faultCategory.isBlank()
+                ? caseRepo.searchByCategoryAndKeyword(faultCategory, keyword)
+                : caseRepo.searchByKeyword(keyword);
+        return cases.stream().map(DiagnosisCaseVO::from).toList();
+    }
+
     public List<DiagnosisCaseVO> getCasesByEquipment(Long equipmentId) {
         return caseRepo.findByEquipmentIdOrderByCreatedAtDesc(equipmentId)
                 .stream().map(DiagnosisCaseVO::from).toList();

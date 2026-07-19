@@ -47,6 +47,24 @@ public class DiagnosisRule {
     @Column(columnDefinition = "TEXT")
     private String alternativeActions; // JSON array of {diagnosis,action,engineer,date}
 
+    @Column(length = 500)
+    private String keywords; // comma-separated search keywords
+
+    @Column(columnDefinition = "TEXT")
+    private String repairSteps; // JSON array of step-by-step repair procedure
+
+    @Column(length = 500)
+    private String toolsRequired; // tools and parts needed
+
+    @Column(columnDefinition = "TEXT")
+    private String safetyNotes; // safety precautions
+
+    @Column(columnDefinition = "DOUBLE DEFAULT 0")
+    private Double estimatedHours; // estimated repair time
+
+    @Column(length = 500)
+    private String applicableModels; // equipment models this rule applies to
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
@@ -86,6 +104,18 @@ public class DiagnosisRule {
     public void setVerifiedCount(Integer n) { this.verifiedCount = n; }
     public String getAlternativeActions() { return alternativeActions; }
     public void setAlternativeActions(String s) { this.alternativeActions = s; }
+    public String getKeywords() { return keywords; }
+    public void setKeywords(String s) { this.keywords = s; }
+    public String getRepairSteps() { return repairSteps; }
+    public void setRepairSteps(String s) { this.repairSteps = s; }
+    public String getToolsRequired() { return toolsRequired; }
+    public void setToolsRequired(String s) { this.toolsRequired = s; }
+    public String getSafetyNotes() { return safetyNotes; }
+    public void setSafetyNotes(String s) { this.safetyNotes = s; }
+    public Double getEstimatedHours() { return estimatedHours; }
+    public void setEstimatedHours(Double n) { this.estimatedHours = n; }
+    public String getApplicableModels() { return applicableModels; }
+    public void setApplicableModels(String s) { this.applicableModels = s; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime t) { this.createdAt = t; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
